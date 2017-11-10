@@ -37,13 +37,16 @@ class Solution(object):
         num = list(str(n))
         n = len(num)
         j = n - 1
+        # j is 5 in 18354321
         while j > 0 and num[j-1] >= num[j]:
             j -= 1
 
         if j > 0:
             i = n - 1
+            # i is 4 in 18354321
             while i >= j and num[j-1] >= num[i]:
                 i -= 1
+            # swap 3 and 4 in 18354321
             num[i], num[j-1] = num[j-1], num[i]
         else:
             return -1

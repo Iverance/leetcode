@@ -34,16 +34,17 @@ class Solution(object):
         :rtype: void Do not return anything, modify nums in-place instead.
         """
         n = len(nums)
-        j = n - 1
+        # find start of decreasing sequence
+        j = n-1
         while j > 0 and nums[j-1] >= nums[j]:
             j -= 1
 
         if j > 0:
-            i = n - 1
-            while i >= j and nums[j-1] >= nums[i]:
+            i = n-1
+            # find the next greater number of j-1 in the decreasing sequence
+            while j <= i and nums[j-1] >= nums[i]:
                 i -= 1
-            nums[i], nums[j-1] = nums[j-1], nums[i]
-        else:
-            return -1
+            nums[j-1], nums[i] = nums[i], nums[j-1]
 
+        #reverse decreasing sequence
         nums[j:] = nums[j:][::-1]
