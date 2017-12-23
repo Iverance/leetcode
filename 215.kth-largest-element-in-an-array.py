@@ -28,8 +28,37 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
+        if not nums:
+            return
+        
+        def partition(arr):
+            lo, hi = 0, len(arr)-1
+            mi = 0
+            pivot = arr[0]
+            while mi <= hi:
+                if arr[mi] < pivot:
+                    arr[mi], arr[hi] = arr[hi], arr[mi]
+                    hi -= 1
+                elif arr[mi] > pivot:
+                    arr[lo], arr[mi] = arr[mi], arr[lo]
+                    lo += 1
+                    mi += 1
+                else:    mi += 1
+            return lo
+        
+        n = len(nums)
+        pos = partition(nums)
+        # print(nums, k, pos)
+        if pos+1 > k:
+            return self.findKthLargest(nums[:pos], k)
+        elif pos+1 < k:
+            return self.findKthLargest(nums[pos+1:], k-pos-1)
+        else:
+            return nums[pos]
+        """
+        O(nlgn)
         heapq.heapify(nums)
         for _ in range(len(nums) - k):
             heapq.heappop(nums)
         return heapq.heappop(nums)
-        
+        """

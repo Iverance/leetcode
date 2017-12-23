@@ -36,13 +36,19 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        snums = sorted(nums)
-        start = end = -1
-        for i in range(len(nums)):
-            if snums[i] != nums[i]:
-                start = i if start == -1 else start
-                end = i
-        return end - start + 1 if start != -1 else 0
+        n = len(nums)
+        maxV, minV = float('-inf'), float('inf')
+        left = right = -1
+        for i in range(n):
+            maxV = max(maxV, nums[i])   # search for the maxvalue L to R
+            minV = min(minV, nums[n-1-i])   # search for the minvalue R to L
+
+            if nums[i] < maxV:
+                right = i
+            if nums[n-1-i] > minV:
+                left = n-1-i
+
+        return 0 if left == -1 else right-left+1
 def main():
     print(Solution().findUnsortedSubarray([2, 6, 4, 8, 10, 9, 15]) == 5)
     print(Solution().findUnsortedSubarray([2, 3,4,5,6,7,7]) == 0)
